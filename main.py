@@ -22,7 +22,7 @@ def odstranit_ukol(ukoly):
     zobrazit_ukoly(ukoly)
     ukol = int(input("\nZadejte číslo úkolu, který chcete odstranit: "))
     ukoly.pop(ukol - 1)
-    print(f"\nÚkol {ukol} byl odstraněn.")
+    print(f"Úkol {ukol} byl odstraněn.")
 
 def program(ukoly):
     volba = hlavni_menu()
