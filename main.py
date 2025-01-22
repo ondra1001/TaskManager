@@ -24,23 +24,28 @@ def odstranit_ukol(ukoly):
     ukoly.pop(ukol - 1)
     print(f"Úkol {ukol} byl odstraněn.")
 
+def konec_programu():
+    print("\nKonec programu.")
+    exit()
+
 def program(ukoly):
-    volba = hlavni_menu()
-    if volba == "1":
-        pridat_ukol(ukoly)
-        program(ukoly)
-    elif volba == "2":
-        zobrazit_ukoly(ukoly)
-        program(ukoly)
-    elif volba == "3":
-        odstranit_ukol(ukoly)
-        program(ukoly)
-    elif volba == "4":
-        print("\nKonec programu.")
-        exit()
-    else:
-        print("\nTato možnost není v nabídce.\nZadejte jednu z možností ze seznamu pomocí číslovek.")
-        program(ukoly)
+
+    while True:
+        volba = hlavni_menu()
+        if volba == "1":
+            pridat_ukol(ukoly)
+    
+        elif volba == "2":
+            zobrazit_ukoly(ukoly)
+
+        elif volba == "3":
+            odstranit_ukol(ukoly)
+
+        elif volba == "4":
+            konec_programu()
+        else:
+            print("\nTato možnost není v nabídce.\nZadejte jednu z možností ze seznamu pomocí číslovek.")
+
 
 ukoly = []
 program(ukoly)
