@@ -21,8 +21,11 @@ def zobrazit_ukoly(ukoly):
 def odstranit_ukol(ukoly):
     zobrazit_ukoly(ukoly)
     ukol = int(input("\nZadejte číslo úkolu, který chcete odstranit: "))
-    ukoly.pop(ukol - 1)
-    print(f"Úkol {ukol} byl odstraněn.")
+    try:
+        ukoly.pop(ukol - 1)
+        print(f"Úkol {ukol} byl odstraněn.")
+    except:
+        print(ValueError("Tento úkol není v seznamu"))
 
 def konec_programu():
     print("\nKonec programu.")
