@@ -25,7 +25,7 @@ def odstranit_ukol(ukoly):
         ukoly.pop(ukol - 1)
         print(f"Úkol {ukol} byl odstraněn.")
     except:
-        print(ValueError("Tento úkol není v seznamu"))
+        print("Tento úkol není v seznamu")
 
 def konec_programu():
     print("\nKonec programu.")
