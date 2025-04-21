@@ -1,55 +1,71 @@
+import databaze
+
 def hlavni_menu():
     print("""
 Správce úkolů - Hlavní menu
 1. Přidat nový úkol
-2. Zobrazit všechny úkoly
-3. Odstranit úkol
-4. Konec programu""")
+2. Zobrazit úkoly
+3. Aktualizovat úkol
+4. Odstranit úkol
+5. Ukončit program""")
     return input("Vyberte možnost (1-4): ")
 
-def pridat_ukol(ukoly):
+def nazev_popis():
     nazev_ukolu = input("\nZadejte název úkolu: ")
     ukol = input("Zadejte popis úkolu: ")
-    ukoly.append([nazev_ukolu, ukol])
-    print(f"\nÚkol {nazev_ukolu} byl přidán.")
+    return [nazev_ukolu, ukol]
 
-def zobrazit_ukoly(ukoly):
-    print("\nSeznam úkolů:")
-    for i in ukoly:
-        print(f"{(ukoly.index(i) + 1)}. {i[0]} - {i[1]}")
+def stav_id():
+    id = input("\nZadejte id úkolu, jehož stav chcete změnit: ")
+    stav = input("\nZadejte stav úkolu (nezahájeno, probíhá, hotovo): ")
+    return [stav, id]
 
-def odstranit_ukol(ukoly):
-    zobrazit_ukoly(ukoly)
-    ukol = int(input("\nZadejte číslo úkolu, který chcete odstranit: "))
-    try:
-        ukoly.pop(ukol - 1)
-        print(f"Úkol {ukol} byl odstraněn.")
-    except:
-        print("Tento úkol není v seznamu")
+def filtr_ukolu(conn):
+    filtr = input("\nChcete filtrovat úkoly? a/n: ")
+    if filtr == "a":
+        vyber = [input("\nNezahájeno/probíhá: ")]
+        databaze.zobrazit_filtr_ukoly(conn, vyber)
+    else:
+        pass
+
 
 def konec_programu():
     print("\nKonec programu.")
     exit()
 
-def program(ukoly):
-
+def main():
+    databaze.vytvorit_databazi()
+    conn = databaze.vytvorit_spojeni()
+    databaze.vytvorit_tabulku(conn)
     while True:
         volba = hlavni_menu()
         if volba == "1":
-            pridat_ukol(ukoly)
+            data = nazev_popis()
+            databaze.pridat_ukol(conn, data)
+
     
         elif volba == "2":
-            zobrazit_ukoly(ukoly)
+            databaze.zobrazit_ukoly(conn)
+            filtr_ukolu(conn)
 
         elif volba == "3":
-            odstranit_ukol(ukoly)
+            databaze.zobrazit_ukoly(conn)
+            data = stav_id()
+            databaze.aktualizovat_ukol(conn, data)
 
         elif volba == "4":
+            databaze.zobrazit_ukoly(conn)
+            data = [input("Zadejte ID úkolu, který chcete smazat: ")]
+            databaze.odstranit_ukol(conn, data)
+
+        elif volba == "5":
+            conn.close()
             konec_programu()
         else:
             print("\nTato možnost není v nabídce.\nZadejte jednu z možností ze seznamu pomocí číslovek.")
 
 
-ukoly = []
-program(ukoly)
+
+if __name__ == "__main__":
+    main()
 
