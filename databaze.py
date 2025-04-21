@@ -1,5 +1,3 @@
-from logging import exception
-import mysql
 import mysql.connector
 
 def vytvorit_databazi():

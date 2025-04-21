@@ -11,9 +11,14 @@ Správce úkolů - Hlavní menu
     return input("Vyberte možnost (1-4): ")
 
 def nazev_popis():
-    nazev_ukolu = input("\nZadejte název úkolu: ")
-    ukol = input("Zadejte popis úkolu: ")
-    return [nazev_ukolu, ukol]
+    nazev = 0
+    popis = 0
+    while nazev and popis != False:
+        nazev = input("\nZadejte název úkolu: ")
+        popis = input("\nZadejte popis úkolu: ")
+        if nazev and popis == 0:
+            print("\nMusíte zadat název i popis úkolu.")
+    return [nazev, popis]
 
 def stav_id():
     id = input("\nZadejte id úkolu, jehož stav chcete změnit: ")
