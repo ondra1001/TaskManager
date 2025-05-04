@@ -1,3 +1,5 @@
+from os.path import curdir
+
 import pytest
 import mysql.connector
 from src import databaze
@@ -60,6 +62,36 @@ def test_pridat_prilis_nazev_ukolu(conn, capsys):
     porovnavac = "Přidání tasku se nepovedlo"
     assert porovnavac in vystup.out
 
+def test_aktualizovat_ukol(conn):
+    data = ["ukol", "popis ukolu"]
+    conn, cursor = conn
+    databaze.pridat_ukol(conn, data)
+    data = ["hotovo", "1"]
+    databaze.aktualizovat_ukol(conn, data)
+    dotaz = "SELECT stav FROM ukoly WHERE nazev = 'ukol';"
+    cursor.execute(dotaz)
+    vysledek = cursor.fetchone()
+    assert vysledek[0] == 'hotovo'
 
 
+def test_aktualizovat_nevalidni_hodnotou(conn, capsys):
+    data = ["ukol", "popis ukolu"]
+    conn, cursor = conn
+    databaze.pridat_ukol(conn, data)
+    data = ["nehotovo", "1"]
+    databaze.aktualizovat_ukol(conn, data)
+    vystup = capsys.readouterr()
+    assert "Update databáze se nepovedl" in vystup.out
+
+
+def test_odstranit_ukol(conn):
+    data = ["ukol", "popis ukolu"]
+    conn, cursor = conn
+    databaze.pridat_ukol(conn, data)
+    data = ["1"]
+    databaze.odstranit_ukol(conn, data)
+    dotaz = "SELECT * FROM ukoly WHERE nazev = 'ukol';"
+    cursor.execute(dotaz)
+    vysledek = cursor.fetchone()
+    assert vysledek is None
 
