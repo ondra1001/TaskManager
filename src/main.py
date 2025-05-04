@@ -1,4 +1,5 @@
-import databaze
+from src import databaze
+
 
 def hlavni_menu():
     print("""
@@ -11,14 +12,13 @@ Správce úkolů - Hlavní menu
     return input("Vyberte možnost (1-4): ")
 
 def nazev_popis():
-    nazev = 0
-    popis = 0
-    while nazev and popis != False:
+     while True:
         nazev = input("\nZadejte název úkolu: ")
-        popis = input("\nZadejte popis úkolu: ")
-        if nazev and popis == 0:
+        popis = input("Zadejte popis úkolu: ")
+        if nazev == "" or popis == "":
             print("\nMusíte zadat název i popis úkolu.")
-    return [nazev, popis]
+        else:
+            return [nazev,popis]
 
 def stav_id():
     id = input("\nZadejte id úkolu, jehož stav chcete změnit: ")
@@ -40,7 +40,7 @@ def konec_programu():
 
 def main():
     databaze.vytvorit_databazi()
-    conn = databaze.vytvorit_spojeni()
+    conn = databaze.pripojeni_db()
     databaze.vytvorit_tabulku(conn)
     while True:
         volba = hlavni_menu()

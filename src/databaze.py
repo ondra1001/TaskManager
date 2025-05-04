@@ -15,7 +15,7 @@ def vytvorit_databazi():
         print(f"Vytvoření databáze selhalo... {e}")
 
 
-def vytvorit_spojeni():
+def pripojeni_db():
     try:
         conn = mysql.connector.connect(
         host = "localhost",
