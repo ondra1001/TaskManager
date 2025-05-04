@@ -95,3 +95,11 @@ def test_odstranit_ukol(conn):
     vysledek = cursor.fetchone()
     assert vysledek is None
 
+def test_odstranit_neexistujici_ukol(conn, capsys):
+    data = ["ukol", "popis ukolu"]
+    conn, cursor = conn
+    databaze.pridat_ukol(conn, data)
+    data = ["152"]
+    vysledek = databaze.odstranit_ukol(conn, data)
+    assert vysledek is None 
+
